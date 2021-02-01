@@ -93,17 +93,11 @@ repo_list()
 
 repo_clone()
 {
-    count=1
-    qt=3
     log "Preparing to clone repositories from ${temp_file}..."
     while read repo_name; do
         log "Cloning repository: ${repo_name}"
         git clone -v ${github_repo_base_url}/${repo_name}.git ${temp_repo_dir}/${repo_name}
-        log "Repository ${repo_name} cloned."
-        if [ ${count} -ge ${qt} ] ; then
-            break
-        fi
-        count=$(( ${count} + 1 ))
+        log "${repo_name} done."
     done < ${temp_file}
 }
 
