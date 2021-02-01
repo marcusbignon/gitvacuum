@@ -3,9 +3,10 @@
 #################
 # Configuration #
 #################
-github_account="<username>" 
-github_token="<token>"
-github_organization="<org>"
+github_secrets_file="./github_api.secret"
+github_account=$( awk '{print $1}' ${github_secrets_file} ) 
+github_token=$( awk '{print $3}' ${github_secrets_file} )
+github_organization=$( awk '{print $2}' ${github_secrets_file} )
 
 temp_path="."
 temp_dirname=".gitvacuum.${$}"
