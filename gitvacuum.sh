@@ -43,6 +43,12 @@ create_temp()
     mkdir ${temp_repo_dir}
 }
 
+remove_temp()
+{
+    mv ${gz_file} ./.
+    rm -rf ${temp_dir}
+}
+
 repo_list()
 {
     github_page=1
@@ -85,3 +91,4 @@ create_temp
 repo_list
 repo_clone
 repo_compress
+remove_temp
