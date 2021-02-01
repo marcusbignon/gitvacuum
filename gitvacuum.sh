@@ -10,6 +10,7 @@ github_organization="<org>"
 temp_path="."
 temp_dirname=".gitvacuum.${$}"
 temp_basename=".gitvacuum.swp"
+temp_repo_dirname="repos"
 
 ###############
 # Script vars #
@@ -19,9 +20,11 @@ github_perpage="100"
 github_base_url="https://api.github.com/orgs/${github_organization}/repos"
 github_query_string="?per_page=${github_perpage}"
 github_url="${github_base_url}${github_query_string}"
+github_repo_base_url="https://github.com/${github_organization}"
 
 temp_dir="${temp_path}/${temp_dirname}"
 temp_file="${temp_dir}/${temp_basename}"
+temp_repo_dir="${temp_dir}/${temp_repo_dirname}"
 
 #############
 # Functions #
@@ -32,6 +35,7 @@ create_temp()
         remove_temp
     fi
     mkdir ${temp_dir}
+    mkdir ${temp_repo_dir}
 }
 
 repo_list()
@@ -51,10 +55,24 @@ repo_list()
     done
 }
 
+repo_clone()
+{
+    count=1
+    qt=3
+    while read repo_name; do
+        git clone -v ${github_repo_base_url}/${repo_name}.git ${temp_repo_dir}/${repo_name}
+        if [ ${count} -ge ${qt} ] ; then
+            break
+        fi
+        count=$(( ${count} + 1 ))
+    done < ${temp_file}
+}
+
 ########
 # Main #
 ########
 
 create_temp
 repo_list
+repo_clone
 cp ${temp_file} ${temp_dir}/repos.txt
