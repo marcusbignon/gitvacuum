@@ -1,0 +1,16 @@
+# gitvacuum temp files
+.gitvacuum*
+
+# Log files
+*.log
+*.log.*
+
+# IDE Visual Studio Code
+.vscode
+
+# OSX
+.DS_Store
+
+# vim
+*.swp
+*.swo
