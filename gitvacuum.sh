@@ -4,7 +4,7 @@
 # Configuration #
 #################
 github_secrets_file="./github_api.secret"
-github_account=$( awk '{print $1}' ${github_secrets_file} ) 
+github_account=$( awk '{print $1}' ${github_secrets_file} )
 github_token=$( awk '{print $3}' ${github_secrets_file} )
 github_organization=$( awk '{print $2}' ${github_secrets_file} )
 
@@ -27,6 +27,10 @@ temp_dir="${temp_path}/${temp_dirname}"
 temp_file="${temp_dir}/${temp_basename}"
 temp_repo_dir="${temp_dir}/${temp_repo_dirname}"
 
+gz_time=$(date +"%Y-%m-%d_%H-%M-%S")
+gz_file_name="repos-${github_organization}-${gz_time}.gz"
+gz_file="${temp_dir}/${gz_file_name}"
+
 #############
 # Functions #
 #############
@@ -42,7 +46,6 @@ create_temp()
 repo_list()
 {
     github_page=1
-
     while : ; do
         github_url="${github_url}&page=${github_page}"
         curl -u ${github_auth} ${github_url} > ${temp_file}.0
@@ -69,11 +72,16 @@ repo_clone()
     done < ${temp_file}
 }
 
+repo_compress()
+{
+    mv ${temp_file} ${temp_repo_dir}/repos.txt
+    tar -czvf ${gz_file} ${temp_repo_dir}/*
+}
+
 ########
 # Main #
 ########
-
 create_temp
 repo_list
 repo_clone
-cp ${temp_file} ${temp_dir}/repos.txt
+repo_compress
