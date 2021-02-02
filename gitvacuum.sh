@@ -1,5 +1,12 @@
 #/bin/bash
 
+# SCRIPT: gitvacuum.sh
+# AUTHOR: Marcus Bignon <marcus@bignon.com.br>
+# DATE:   2021-01-30
+#
+# PURPOSE: Simple shellscript that lists and clones all repositories from GitHub.
+#
+
 set -euo pipefail
 
 #################
