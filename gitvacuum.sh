@@ -8,10 +8,11 @@
 #
 
 set -euo pipefail
+path="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 # Configuration
 # ---------------------------------------------------------
-github_secrets_file="./github_api.secret"
+github_secrets_file="${path}/github_api.secret"
 github_account=$( awk '{print $1}' "$github_secrets_file" )
 github_organization=$( awk '{print $2}' "$github_secrets_file" )
 github_token=$( awk '{print $3}' "$github_secrets_file" )
