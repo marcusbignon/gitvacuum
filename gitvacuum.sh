@@ -7,6 +7,7 @@
 # PURPOSE: Simple shellscript that lists and clones all repositories from GitHub.
 #
 
+path="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 set -euo pipefail
 path="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
